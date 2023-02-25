@@ -1,9 +1,113 @@
-#container {
-  border: 12px soild black;
-  padding: 1px;
-  border-radius: 16px;
-}
-.weather-app-wrapper {
-  max-width: 600px;
+.weather-app {
+  max-width: 500px;
   margin: 30px auto;
+  padding: 20px;
+  border: 1px solid rgb(195, 195, 195);
+  border-radius: 10px;
+}
+
+#icon {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 175px;
+  height: 175px;
+  margin-bottom: -25px;
+}
+
+hr {
+  width: 125px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 100px;
+  text-align: center;
+  margin-bottom: -10px;
+  margin-top: -10px;
+}
+
+#temp-unit {
+  text-align: center;
+  margin-top: 0px;
+}
+
+#city {
+  font-display: none;
+  font-size: 60px;
+  margin-left: 10px;
+}
+
+#dateTime {
+  margin-top: 20px;
+  text-align: right;
+  margin-left: -25px;
+  padding-bottom: 0px;
+}
+
+#date {
+  margin-bottom: 0px;
+}
+
+li {
+  list-style: none;
+  margin-top: 0px;
+  padding: 0px;
+  color: grey;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+#wind,
+#humidity {
+  text-align: center;
+}
+
+#wind {
+  padding-left: 35px;
+}
+
+#humidity {
+  padding-right: 35px;
+}
+
+#seach-row {
+  margin: 10px;
+}
+
+#search-form {
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+#city-search {
+  padding-left: 5px;
+  padding-right: 10px;
+  width: 265px;
+}
+
+#search-button {
+  padding-left: 0px;
+  padding-right: 0px;
+  width: 50px;
+  text-align: center;
+  margin-left: 55px;
+}
+
+#current-location {
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: center;
+  margin-left: 40px;
+}
+
+div.col-3 {
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: center;
+  width: 100px;
 }
