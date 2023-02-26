@@ -92,13 +92,16 @@ changeHours()
 // search city and update name
 function search(event) {
   event.preventDefault()
-  let searchInput = document.querySelector('#search-input')
 
   let h2 = document.querySelector('h2')
+  let input = searchInput.value
+  let modInput = input[0].toUpperCase() + input.slice(1)
   if (searchInput.value) {
-    h2.textContent = searchInput.value
+    h2.textContent = modInput
   }
+  //change temp, humidity, wind speed according to searched city
 }
 
 let form = document.querySelector('#search-form')
 form.addEventListener('submit', search)
+let searchInput = document.querySelector('#search-input')
