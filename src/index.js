@@ -2,6 +2,7 @@ let axiosUrl = 'https://jsonplaceholder.typicode.com/comments/'
 let apiKey = 'dff5c692192605ee5ed7f95b423ae857'
 let apiUrl =
   'https://api.openweathermap.org/data/2.5/weather?q=chicago&units=imperial&appid=dff5c692192605ee5ed7f95b423ae857'
+let iconUrl = 'https://openweathermap.org/img/wn/10d@2x.png'
 
 //update weather temperature
 function displayTemperature(response) {
@@ -29,6 +30,18 @@ function displayHumidity(response) {
 }
 
 axios.get(apiUrl).then(displayHumidity)
+
+//update weather icon
+function displayWeatherIcon(response) {
+  let iconKey = response.data.weather[0].icon
+  let iconElement = document.querySelector('#icon')
+  iconElement.setAttribute(
+    'src',
+    `https://openweathermap.org/img/wn/${iconKey}.png`,
+  )
+}
+
+axios.get(apiUrl).then(displayWeatherIcon)
 
 //update date
 function changeDate() {
