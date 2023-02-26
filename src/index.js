@@ -122,6 +122,7 @@ function search(event) {
   }
   axios.get(newApiUrl).then(displayNewWeather)
 
+  //update wind speed according to searched city
   function displayNewWindSpeed(response) {
     let newWindElement = Math.round(response.data.wind.speed)
     let currentSpeed = document.querySelector('#windSpeed')
@@ -130,7 +131,7 @@ function search(event) {
 
   axios.get(newApiUrl).then(displayNewWindSpeed)
 
-  //update humidity
+  //update humidity according to searched city
   function displayNewHumidity(response) {
     let newHumidityElement = response.data.main.humidity
     let currentHumidity = document.querySelector('#humidityPercent')
@@ -138,6 +139,18 @@ function search(event) {
   }
 
   axios.get(newApiUrl).then(displayNewHumidity)
+
+  //update weather icon according to searched city
+  function displayNewWeatherIcon(response) {
+    let newIconKey = response.data.weather[0].icon
+    let newIconElement = document.querySelector('#icon')
+    newIconElement.setAttribute(
+      'src',
+      `https://openweathermap.org/img/wn/${newIconKey}.png`,
+    )
+  }
+
+  axios.get(newApiUrl).then(displayNewWeatherIcon)
 }
 
 let form = document.querySelector('#search-form')
