@@ -100,6 +100,31 @@ function search(event) {
     h2.textContent = modInput
   }
   //change temp, humidity, wind speed according to searched city
+  let newApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${input}&units=imperial&appid=dff5c692192605ee5ed7f95b423ae857`
+
+  function displayNewWeather(response) {
+    let newTemperature = Math.round(response.data.main.temp)
+    let h1 = document.querySelector('h1')
+    h1.innerHTML = `${newTemperature}°`
+  }
+  axios.get(newApiUrl).then(displayNewWeather)
+
+  function displayNewWindSpeed(response) {
+    let newWindElement = Math.round(response.data.wind.speed)
+    let currentSpeed = document.querySelector('#windSpeed')
+    currentSpeed.innerHTML = `${newWindElement} mph`
+  }
+
+  axios.get(newApiUrl).then(displayNewWindSpeed)
+
+  //update humidity
+  function displayNewHumidity(response) {
+    let newHumidityElement = response.data.main.humidity
+    let currentHumidity = document.querySelector('#humidityPercent')
+    currentHumidity.innerHTML = `${newHumidityElement}%`
+  }
+
+  axios.get(newApiUrl).then(displayNewHumidity)
 }
 
 let form = document.querySelector('#search-form')
