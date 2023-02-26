@@ -88,3 +88,17 @@ function changeHours() {
   currentTime.innerHTML = `${hours}:${minutes}`
 }
 changeHours()
+
+// search city and update name
+function search(event) {
+  event.preventDefault()
+  let searchInput = document.querySelector('#search-input')
+
+  let h2 = document.querySelector('h2')
+  if (searchInput.value) {
+    h2.textContent = searchInput.value
+  }
+}
+
+let form = document.querySelector('#search-form')
+form.addEventListener('submit', search)
