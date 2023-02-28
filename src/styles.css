@@ -105,3 +105,13 @@ div.col-3 {
   text-align: center;
   width: 100px;
 }
+
+.weather-app .active {
+  color: rgb(33, 33, 33);
+  cursor: default;
+  text-decoration: none;
+}
+
+.tweather-app .active:hover {
+  text-decoration: none;
+}

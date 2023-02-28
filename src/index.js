@@ -9,9 +9,37 @@ function displayTemperature(response) {
   let tempElement = Math.round(response.data.main.temp)
   let currentTemp = document.querySelector('#current-temp')
   currentTemp.innerHTML = `${tempElement}°`
+
+  fahrenheitTemperature = response.data.main.temp
 }
 
 axios.get(apiUrl).then(displayTemperature)
+
+//switch Farheneit and Celsius
+function displayFTemperature(event) {
+  event.preventDefault()
+  celsiusLink.classList.remove('active')
+  fahrenheitLink.classList.add('active')
+  let temperatureElement = document.querySelector('#current-temp')
+  temperatureElement.textContent = `${Math.round(fahrenheitTemperature)}°`
+}
+
+function displayCTemperature(event) {
+  event.preventDefault()
+  fahrenheitLink.classList.remove('active')
+  celsiusLink.classList.add('active')
+  let temperatureElement = document.querySelector('#current-temp')
+  let celsiusTemperature = ((fahrenheitTemperature - 32) * 5) / 9
+  temperatureElement.textContent = `${Math.round(celsiusTemperature)}°`
+}
+
+let fahrenheitTemperature = null
+
+let fahrenheitLink = document.querySelector('#fahrenheit-switch')
+fahrenheitLink.addEventListener('click', displayFTemperature)
+
+let celsiusLink = document.querySelector('#celsius-switch')
+celsiusLink.addEventListener('click', displayCTemperature)
 
 //update wind speed
 function displayWindSpeed(response) {
