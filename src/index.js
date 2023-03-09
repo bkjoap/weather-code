@@ -184,3 +184,30 @@ function search(event) {
 let form = document.querySelector('#search-form')
 form.addEventListener('submit', search)
 let searchInput = document.querySelector('#search-input')
+
+//display Forecast
+function displayForecast() {
+  let forecastElement = document.querySelector('#weatherForecast')
+
+  let forecastHTML = `<div class="row">`
+  let days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat']
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="col-2">
+                                <div id="weather-forecast-day">
+                                    ${day}
+                                </div>
+                                <img src="https://openweathermap.org/img/wn/10d@2x.png" id="forecast-icon">
+                                <h6 id="forecast-temp">
+                                    <span id="forecast-temp-max">45° </span>|
+                                        <span id="forecast-temp-min">5°</span>
+                                </h6>
+                            </div>`
+  })
+
+  forecastHTML = forecastHTML + `</div>`
+  forecastElement.innerHTML = forecastHTML
+}
+
+displayForecast()
