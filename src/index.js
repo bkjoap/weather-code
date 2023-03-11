@@ -179,6 +179,12 @@ function search(event) {
   }
 
   axios.get(newApiUrl).then(displayNewWeatherIcon)
+
+  function getNewCoords(response) {
+    let newCoords = response.data.coord
+    console.log(newCoords)
+  }
+  axios.get(apiUrl).then(getNewCoords)
 }
 
 let form = document.querySelector('#search-form')
@@ -208,6 +214,16 @@ function displayForecast() {
 
   forecastHTML = forecastHTML + `</div>`
   forecastElement.innerHTML = forecastHTML
+
+  //automatically call city coords
+  function getCoord(response) {
+    let lat = response.data.coord.lat
+    let lon = response.data.coord.lon
+    let coordApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`
+    console.log(coordApiUrl)
+  }
+  axios.get(apiUrl).then(getCoord)
 }
 
 displayForecast()
+//Get the data for the Forecast
