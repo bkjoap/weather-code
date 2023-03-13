@@ -138,7 +138,7 @@ searchCity('chicago')
 function getCoord(coord) {
   let lat = coord.lat
   let lon = coord.lon
-  let coordApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`
+  let coordApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`
   axios.get(coordApiUrl).then(getDailyForecast)
 }
 
