@@ -162,10 +162,11 @@ function getDailyForecast(response) {
     let forecastHTML = `<div class="row">`
     let days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat']
 
-    forecast.forEach(function (forecastDay) {
-      forecastHTML =
-        forecastHTML +
-        `<div class="col-2">
+    forecast.forEach(function (forecastDay, index) {
+      if (index < 6) {
+        forecastHTML =
+          forecastHTML +
+          `<div class="col-2">
                                 <div id="weather-forecast-day">
                                     ${formatDay(forecastDay.dt)}
                                 </div>
@@ -181,6 +182,7 @@ function getDailyForecast(response) {
                                         )}°</span>
                                 </h6>
                             </div>`
+      }
     })
 
     forecastHTML = forecastHTML + `</div>`
