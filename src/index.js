@@ -1,19 +1,4 @@
-let axiosUrl = 'https://jsonplaceholder.typicode.com/comments/'
 let apiKey = 'dff5c692192605ee5ed7f95b423ae857'
-let apiUrl =
-  'https://api.openweathermap.org/data/2.5/weather?q=chicago&units=imperial&appid=dff5c692192605ee5ed7f95b423ae857'
-let iconUrl = 'https://openweathermap.org/img/wn/10d@2x.png'
-
-//update weather temperature
-function displayTemperature(response) {
-  let tempElement = Math.round(response.data.main.temp)
-  let currentTemp = document.querySelector('#current-temp')
-  currentTemp.innerHTML = `${tempElement}°`
-
-  fahrenheitTemperature = response.data.main.temp
-}
-
-axios.get(apiUrl).then(displayTemperature)
 
 //switch Farheneit and Celsius
 function displayFTemperature(event) {
@@ -40,36 +25,6 @@ fahrenheitLink.addEventListener('click', displayFTemperature)
 
 let celsiusLink = document.querySelector('#celsius-switch')
 celsiusLink.addEventListener('click', displayCTemperature)
-
-//update wind speed
-function displayWindSpeed(response) {
-  let windElement = Math.round(response.data.wind.speed)
-  let currentSpeed = document.querySelector('#windSpeed')
-  currentSpeed.innerHTML = `${windElement} mph`
-}
-
-axios.get(apiUrl).then(displayWindSpeed)
-
-//update humidity
-function displayHumidity(response) {
-  let humidityElement = response.data.main.humidity
-  let currentHumidity = document.querySelector('#humidityPercent')
-  currentHumidity.innerHTML = `${humidityElement}%`
-}
-
-axios.get(apiUrl).then(displayHumidity)
-
-//update weather icon
-function displayWeatherIcon(response) {
-  let iconKey = response.data.weather[0].icon
-  let iconElement = document.querySelector('#icon')
-  iconElement.setAttribute(
-    'src',
-    `https://openweathermap.org/img/wn/${iconKey}.png`,
-  )
-}
-
-axios.get(apiUrl).then(displayWeatherIcon)
 
 //update date
 function changeDate() {
@@ -135,98 +90,101 @@ function search(event) {
   event.preventDefault()
 
   let h2 = document.querySelector('h2')
+  let searchInput = document.querySelector('#search-input')
   let input = searchInput.value
   let modInput = input[0].toUpperCase() + input.slice(1)
   if (searchInput.value) {
     h2.textContent = modInput
   }
+
+  searchCity(input)
+}
+
+function searchCity(city) {
   //change temp, humidity, wind speed according to searched city
-  let newApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${input}&units=imperial&appid=dff5c692192605ee5ed7f95b423ae857`
+  let newApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=dff5c692192605ee5ed7f95b423ae857`
 
-  function displayNewWeather(response) {
-    let newTemperature = Math.round(response.data.main.temp)
-    let h1 = document.querySelector('h1')
-    h1.innerHTML = `${newTemperature}°`
-  }
   axios.get(newApiUrl).then(displayNewWeather)
+}
 
-  //update wind speed according to searched city
-  function displayNewWindSpeed(response) {
-    let newWindElement = Math.round(response.data.wind.speed)
-    let currentSpeed = document.querySelector('#windSpeed')
-    currentSpeed.innerHTML = `${newWindElement} mph`
-  }
+function displayNewWeather(response) {
+  let newTemperature = Math.round(response.data.main.temp)
+  let h1 = document.querySelector('h1')
+  h1.innerHTML = `${newTemperature}°`
+  fahrenheitTemperature = response.data.main.temp
+  let newWindElement = Math.round(response.data.wind.speed)
+  let currentSpeed = document.querySelector('#windSpeed')
+  currentSpeed.innerHTML = `${newWindElement} mph`
+  let newHumidityElement = response.data.main.humidity
+  let currentHumidity = document.querySelector('#humidityPercent')
+  currentHumidity.innerHTML = `${newHumidityElement}%`
+  let newIconKey = response.data.weather[0].icon
+  let newIconElement = document.querySelector('#icon')
+  newIconElement.setAttribute(
+    'src',
+    `https://openweathermap.org/img/wn/${newIconKey}.png`,
+  )
 
-  axios.get(newApiUrl).then(displayNewWindSpeed)
-
-  //update humidity according to searched city
-  function displayNewHumidity(response) {
-    let newHumidityElement = response.data.main.humidity
-    let currentHumidity = document.querySelector('#humidityPercent')
-    currentHumidity.innerHTML = `${newHumidityElement}%`
-  }
-
-  axios.get(newApiUrl).then(displayNewHumidity)
-
-  //update weather icon according to searched city
-  function displayNewWeatherIcon(response) {
-    let newIconKey = response.data.weather[0].icon
-    let newIconElement = document.querySelector('#icon')
-    newIconElement.setAttribute(
-      'src',
-      `https://openweathermap.org/img/wn/${newIconKey}.png`,
-    )
-  }
-
-  axios.get(newApiUrl).then(displayNewWeatherIcon)
-
-  function getNewCoords(response) {
-    let newCoords = response.data.coord
-    console.log(newCoords)
-  }
-  axios.get(apiUrl).then(getNewCoords)
+  getCoord(response.data.coord)
 }
 
 let form = document.querySelector('#search-form')
 form.addEventListener('submit', search)
-let searchInput = document.querySelector('#search-input')
 
-//display Forecast
-function displayForecast() {
-  let forecastElement = document.querySelector('#weatherForecast')
+searchCity('chicago')
 
-  let forecastHTML = `<div class="row">`
-  let days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat']
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `<div class="col-2">
-                                <div id="weather-forecast-day">
-                                    ${day}
-                                </div>
-                                <img src="https://openweathermap.org/img/wn/10d@2x.png" id="forecast-icon">
-                                <h6 id="forecast-temp">
-                                    <span id="forecast-temp-max">45° </span>|
-                                        <span id="forecast-temp-min">5°</span>
-                                </h6>
-                            </div>`
-  })
+//Get the data for the Forecast
 
-  forecastHTML = forecastHTML + `</div>`
-  forecastElement.innerHTML = forecastHTML
-
-  //automatically call city coords
-  function getCoord(coord) {
-    let lat = coord.lat
-    let lon = coord.lon
-    let coordApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`
-    axios.get(coordApiUrl).then(getDailyForecast)
-  }
-
-  function getDailyForecast(response) {
-    console.log(response.data.daily)
-  }
+function getCoord(coord) {
+  let lat = coord.lat
+  let lon = coord.lon
+  let coordApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`
+  axios.get(coordApiUrl).then(getDailyForecast)
 }
 
-displayForecast()
-//Get the data for the Forecast
+//pretty much the entire forecast coding
+function getDailyForecast(response) {
+  let forecast = response.data.daily
+  console.log(forecast)
+
+  // get the correct weekday for the forecast
+  function formatDay(timestamp) {
+    let date = new Date(timestamp * 1000)
+    let day = date.getDay()
+    let days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat']
+
+    return days[day]
+  }
+  //display Forecast
+  function displayForecast() {
+    let forecastElement = document.querySelector('#weatherForecast')
+
+    let forecastHTML = `<div class="row">`
+    let days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat']
+
+    forecast.forEach(function (forecastDay) {
+      forecastHTML =
+        forecastHTML +
+        `<div class="col-2">
+                                <div id="weather-forecast-day">
+                                    ${formatDay(forecastDay.dt)}
+                                </div>
+                                <img src="https://openweathermap.org/img/wn/${
+                                  forecastDay.weather[0].icon
+                                }@2x.png" id="forecast-icon">
+                                <h6 id="forecast-temp">
+                                    <span id="forecast-temp-max">${Math.round(
+                                      forecastDay.temp.max,
+                                    )}° </span>|
+                                        <span id="forecast-temp-min">${Math.round(
+                                          forecastDay.temp.min,
+                                        )}°</span>
+                                </h6>
+                            </div>`
+    })
+
+    forecastHTML = forecastHTML + `</div>`
+    forecastElement.innerHTML = forecastHTML
+  }
+  displayForecast()
+}
