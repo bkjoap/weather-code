@@ -216,13 +216,16 @@ function displayForecast() {
   forecastElement.innerHTML = forecastHTML
 
   //automatically call city coords
-  function getCoord(response) {
-    let lat = response.data.coord.lat
-    let lon = response.data.coord.lon
+  function getCoord(coord) {
+    let lat = coord.lat
+    let lon = coord.lon
     let coordApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`
-    console.log(coordApiUrl)
+    axios.get(coordApiUrl).then(getDailyForecast)
   }
-  axios.get(apiUrl).then(getCoord)
+
+  function getDailyForecast(response) {
+    console.log(response.data.daily)
+  }
 }
 
 displayForecast()
